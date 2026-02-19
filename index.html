@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АНТИМАТ — Автоматическое удаление мата из видео с помощью ИИ</title>
+    <meta name="description" content="Нейросеть находит и заглушает мат в видео автоматически. Для YouTube, подкастов, ТВ и соцсетей.">
+    <meta name="keywords" content="удалить мат из видео, убрать мат, заглушить мат, запикать мат, цензура видео, антимат">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- НАВИГАЦИЯ -->
+<nav class="nav">
+    <div class="container nav-inner">
+        <a href="#" class="logo">
+            <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M14 2L3 7V13C3 19.6 7.7 25.7 14 27C20.3 25.7 25 19.6 25 13V7L14 2Z" fill="url(#lg1)" opacity="0.15" stroke="url(#lg1)" stroke-width="1.5"/>
+                <defs>
+                    <linearGradient id="lg1" x1="3" y1="2" x2="25" y2="27">
+                        <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            АНТИМАТ
+        </a>
+        <div class="nav-links">
+            <a href="#how">Как работает</a>
+            <a href="#features">Возможности</a>
+            <a href="#pricing">Цены</a>
+            <a href="#faq">Вопросы</a>
+            <a href="#start" class="btn-nav">Начать</a>
+        </div>
+        <button class="burger" onclick="toggleMenu()" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#how" onclick="toggleMenu()">Как работает</a>
+        <a href="#features" onclick="toggleMenu()">Возможности</a>
+        <a href="#pricing" onclick="toggleMenu()">Цены</a>
+        <a href="#faq" onclick="toggleMenu()">Вопросы</a>
+        <a href="#start" class="btn-nav" onclick="toggleMenu()">Начать</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+        <div class="hero-badge">
+            <svg width="16" height="16" viewBox="0 0 28 28" fill="none" style="vertical-align:middle;margin-right:6px;">
+                <path d="M14 2L3 7V13C3 19.6 7.7 25.7 14 27C20.3 25.7 25 19.6 25 13V7L14 2Z" fill="#7c3aed" opacity="0.3" stroke="#7c3aed" stroke-width="1.5"/>
+            </svg>
+            Нейросеть для цензуры видео
+        </div>
+        <h1>Больше не нужно<br>часами <span class="gradient-text">искать мат</span><br>в видео вручную</h1>
+        <p class="hero-sub">
+            Загрузите видео — нейросеть найдёт и заглушит всю нецензурную лексику автоматически.<br>
+            Вместо часов ручной работы — несколько минут.
+        </p>
+        <div class="hero-buttons">
+            <a href="#start" class="btn-primary">Начать обработку
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-left:8px;">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <a href="#how" class="btn-secondary">Как это работает</a>
+        </div>
+    </div>
+</section>
+
+<!-- ЦИФРЫ -->
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <div class="stat-desc">Точность распознавания</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">~4x</div>
+                <div class="stat-desc">Быстрее реального времени</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div class="stat-desc">Корней нецензурных слов</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-desc">Аналогов на русском</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ДЕМО -->
+<section class="demo-section">
+    <div class="container">
+        <div class="demo-card">
+            <div class="demo-header">
+                <div class="demo-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <span class="demo-title">антимат — обработка видео</span>
+            </div>
+            <div class="demo-body" id="demoBody">
+                <div class="demo-line" data-delay="0"><span class="dim">⚡</span> GPU: NVIDIA RTX 4090 | CUDA | float16</div>
+                <div class="demo-line" data-delay="600"><span class="dim">🎵 Шаг 1:</span> Извлекаю аудио... <span class="green">готово</span></div>
+                <div class="demo-line" data-delay="1200"><span class="dim">🧠 Шаг 2:</span> Загружаю нейросеть large-v3... <span class="green">готово</span></div>
+                <div class="demo-line" data-delay="1800"><span class="dim">🎤 Шаг 3:</span> Распознаю речь... <span class="purple">████████████████</span> <span class="green">готово</span></div>
+                <div class="demo-line" data-delay="2400"><span class="dim">🔍 Шаг 4:</span> Найдено: <span class="red">23 нецензурных фрагмента</span></div>
+                <div class="demo-line" data-delay="3000"><span class="dim">🔇 Шаг 5:</span> Заглушаю мат... <span class="green">готово</span></div>
+                <div class="demo-line" data-delay="3600"><span class="dim">🎬 Шаг 6:</span> Собираю видео... <span class="green">готово</span></div>
+                <div class="demo-line result" data-delay="4200">✅ Готово! 47 минут видео обработано за 11 мин 23 сек</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- КАК РАБОТАЕТ -->
+<section class="how-section" id="how">
+    <div class="container">
+        <div class="section-header">
+            <h2>Как это работает</h2>
+            <p class="section-sub">Три шага — и видео чистое</p>
+        </div>
+        <div class="steps">
+            <div class="step-card">
+                <div class="step-num">01</div>
+                <div class="step-icon-wrap"><div class="step-icon">📤</div></div>
+                <h3>Загрузите видео</h3>
+                <p>Перетащите файл на сайт или выберите из папки. MP4, AVI, MKV, MOV и другие форматы.</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step-card">
+                <div class="step-num">02</div>
+                <div class="step-icon-wrap"><div class="step-icon">🧠</div></div>
+                <h3>Нейросеть обрабатывает</h3>
+                <p>ИИ распознаёт каждое слово, находит мат и аккуратно заглушает. Голос, музыка и звуки сохраняются.</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step-card">
+                <div class="step-num">03</div>
+                <div class="step-icon-wrap"><div class="step-icon">📥</div></div>
+                <h3>Скачайте результат</h3>
+                <p>Чистое видео, аудиодорожка, субтитры и отчёт с таймкодами всего найденного мата.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ВОЗМОЖНОСТИ -->
+<section class="features-section" id="features">
+    <div class="container">
+        <div class="section-header">
+            <h2>Возможности</h2>
+            <p class="section-sub">Больше чем просто удаление мата</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card large">
+                <div class="feature-badge">Главное</div>
+                <h3>🔇 Удаление мата</h3>
+                <p>Нейросеть Whisper large-v3 распознаёт речь с точностью 98%. База из 200+ корней нецензурных слов с учётом всех падежей, приставок и суффиксов. Умная система исключений — не заглушит нормальные слова.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎛️ Режимы цензуры</h3>
+                <p><b>Приглушение</b> — звук плавно затихает<br><b>Полный мьют</b> — полная тишина<br><b>Бип</b> — классический сигнал как на ТВ</p>
+            </div>
+            <div class="feature-card">
+                <h3>✂️ Мягкая и полная</h3>
+                <p><b>Полная:</b> ******** — слово заглушено целиком<br><br><b>Мягкая:</b> Дол***** — начало слышно, контекст понятен, но слово не разобрать</p>
+            </div>
+            <div class="feature-card">
+                <h3>📝 Субтитры бесплатно</h3>
+                <p>К каждому видео — файл .srt с субтитрами. Импортируйте в Premiere Pro, DaVinci Resolve или загрузите на YouTube.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📋 Таймкоды и текст</h3>
+                <p>Полная текстовая расшифровка видео + отчёт со всеми таймкодами найденного мата. Удобно для продюсеров.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎵 Только аудио</h3>
+                <p>Получите только чистую аудиодорожку без видео. Замените звук в Premiere Pro или DaVinci Resolve. Дешевле и быстрее.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🇬🇧 Английский мат</h3>
+                <p>Включите опцию — нейросеть дополнительно найдёт английскую нецензурную лексику. Русский и английский обрабатываются отдельно.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🤬 Грубости</h3>
+                <p>Отдельная опция для слов вроде «жо*а», «де*ьмо», «го*но». Это не мат, но иногда нужно убрать. Включается галочкой.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ GPU ускорение</h3>
+                <p>Обработка на мощных видеокартах NVIDIA RTX. 20 минут видео — за 5 минут. В 10-20 раз быстрее ручной работы.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- СРАВНЕНИЕ -->
+<section class="compare-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Ручная работа vs АНТИМАТ</h2>
+            <p class="section-sub">Сравните сами</p>
+        </div>
+        <div class="compare-cards">
+            <div class="compare-card old">
+                <div class="compare-label">👨‍💻 Вручную</div>
+                <div class="compare-list">
+                    <div class="compare-item bad">Видео 20 мин → поиск и обработка вручную около часа</div>
+                    <div class="compare-item bad">Видео 2 часа → работа на весь день</div>
+                    <div class="compare-item bad">Пропускаете мат (устали, не заметили)</div>
+                    <div class="compare-item bad">Монотонная работа, выгорание</div>
+                    <div class="compare-item bad">Монтажёр стоит 500–2000 ₽/час</div>
+                </div>
+            </div>
+            <div class="compare-card new">
+                <div class="compare-label">🧠 АНТИМАТ</div>
+                <div class="compare-list">
+                    <div class="compare-item good">Видео 20 мин → готово за 5 минут</div>
+                    <div class="compare-item good">Видео 2 часа → готово за 30 минут</div>
+                    <div class="compare-item good">Точность 98%, ничего не пропустит</div>
+                    <div class="compare-item good">Полностью автоматически</div>
+                    <div class="compare-item good">500 ⚡ — это 60–160 обработанных видео</div>
+                </div>
+            </div>
+        </div>
+</section>
+
+<!-- ЦЕНЫ -->
+<section class="pricing-section" id="pricing">
+    <div class="container">
+        <div class="section-header">
+            <h2>Лучшие цены</h2>
+            <p class="section-sub">Покупайте заряды ⚡ и тратьте на обработку видео</p>
+        </div>
+
+        <div class="charges-explain">
+            <div class="charge-icon-big">
+                <svg width="48" height="48" viewBox="0 0 28 28" fill="none">
+                    <path d="M14 2L3 7V13C3 19.6 7.7 25.7 14 27C20.3 25.7 25 19.6 25 13V7L14 2Z" fill="url(#cg)" opacity="0.2" stroke="url(#cg)" stroke-width="1.5"/>
+                    <defs><linearGradient id="cg" x1="3" y1="2" x2="25" y2="27"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+                </svg>
+            </div>
+            <div class="charge-text">
+                <b>Заряды ⚡</b> — внутренняя валюта АНТИМАТ. Купите пакет зарядов и тратьте их на обработку видео. Чем больше пакет — тем выгоднее. Заряды не сгорают.
+            </div>
+        </div>
+
+        <div class="pricing-cards">
+            <div class="price-card">
+                <div class="price-charges">30 ⚡</div>
+                <div class="price-old">199 ₽</div>
+                <div class="price-amount">149 ₽</div>
+                <a href="#start" class="btn-price">Купить</a>
+            </div>
+            <div class="price-card popular">
+                <div class="price-badge">Выгодно</div>
+                <div class="price-charges">80 ⚡</div>
+                <div class="price-old">429 ₽</div>
+                <div class="price-amount">349 ₽</div>
+                <a href="#start" class="btn-price popular">Купить</a>
+            </div>
+            <div class="price-card popular2">
+                <div class="price-badge pop2">Ещё выгоднее</div>
+                <div class="price-charges">200 ⚡</div>
+                <div class="price-old">999 ₽</div>
+                <div class="price-amount">799 ₽</div>
+                <a href="#start" class="btn-price pop2">Купить</a>
+            </div>
+            <div class="price-card best">
+                <div class="price-badge best">Лучшая цена</div>
+                <div class="price-charges">500 ⚡</div>
+                <div class="price-old">2 149 ₽</div>
+                <div class="price-amount">1 690 ₽</div>
+                <a href="#start" class="btn-price best">Купить</a>
+            </div>
+        </div>
+
+        <div class="tariffs">
+            <h3>Сколько зарядов стоит обработка</h3>
+            <div class="tariff-table">
+                <div class="tariff-row header">
+                    <div class="tariff-cell">Тариф</div>
+                    <div class="tariff-cell">Модель</div>
+                    <div class="tariff-cell">Точность</div>
+                    <div class="tariff-cell">Скорость</div>
+                    <div class="tariff-cell">Видео до 30 мин</div>
+                    <div class="tariff-cell">Только аудио</div>
+                </div>
+                <div class="tariff-row">
+                    <div class="tariff-cell name">Стандарт</div>
+                    <div class="tariff-cell">medium</div>
+                    <div class="tariff-cell">~90%</div>
+                    <div class="tariff-cell">Быстрая</div>
+                    <div class="tariff-cell highlight">5 ⚡</div>
+                    <div class="tariff-cell">3 ⚡</div>
+                </div>
+                <div class="tariff-row popular">
+                    <div class="tariff-cell name">Максимум <span class="rec">рек.</span></div>
+                    <div class="tariff-cell">large-v3</div>
+                    <div class="tariff-cell">~98%</div>
+                    <div class="tariff-cell">Стандартная</div>
+                    <div class="tariff-cell highlight">8 ⚡</div>
+                    <div class="tariff-cell">5 ⚡</div>
+                </div>
+            </div>
+            <div class="tariff-note bright">
+                ⚡ Видео 30–60 мин: ×2 зарядов &nbsp;|&nbsp; 60–120 мин: ×3 зарядов &nbsp;|&nbsp; 120+ мин: ×4 зарядов
+            </div>
+
+        <div class="calculator" id="calculator">
+            <h3>📊 Калькулятор стоимости</h3>
+            <div class="calc-form">
+                <div class="calc-field">
+                    <label>Длительность видео (минуты)</label>
+                    <input type="number" id="calcMinutes" value="20" min="1" max="600">
+                </div>
+                <div class="calc-field">
+                    <label>Тариф</label>
+                    <select id="calcTariff">
+                        <option value="standard">Стандарт (medium, ~90%)</option>
+                        <option value="maximum" selected>Максимум (large-v3, ~98%)</option>
+                    </select>
+                </div>
+                <div class="calc-field">
+                    <label>Формат</label>
+                    <select id="calcFormat">
+                        <option value="video">Видео + аудио</option>
+                        <option value="audio">Только аудио</option>
+                    </select>
+                </div>
+            </div>
+            <div class="calc-result" id="calcResult">
+                <div class="calc-charges">8 ⚡</div>
+                <div class="calc-time">≈ 5 мин обработки</div>
+                <div class="calc-price">от 27 ₽ до 40 ₽</div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- НАЧАТЬ -->
+<section class="start-section" id="start">
+    <div class="container">
+        <div class="section-header">
+            <h2>Начать обработку</h2>
+            <p class="section-sub">Загрузите видео и получите результат через несколько минут</p>
+        </div>
+        <div class="upload-card">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 15V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V15" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M12 3V16M12 3L8 7M12 3L16 7" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3>Перетащите видео сюда</h3>
+                <p>или нажмите для выбора файла</p>
+                <p class="upload-formats">MP4, AVI, MKV, MOV, WEBM • до 10 ГБ</p>
+                <input type="file" id="fileInput" accept="video/*,audio/*" hidden>
+            </div>
+
+            <!-- Настройки (после выбора файла) -->
+            <div class="upload-settings" id="uploadSettings" style="display:none;">
+                <div class="file-info" id="fileInfo"></div>
+                
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <label>Тариф</label>
+                        <select id="settingTariff">
+                            <option value="standard">Стандарт (90%) — 5 ⚡</option>
+                            <option value="maximum" selected>Максимум (98%) — 8 ⚡</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>Формат результата</label>
+                        <select id="settingFormat">
+                            <option value="video">Видео + аудио</option>
+                            <option value="audio">Только аудиодорожка</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>Режим цензуры</label>
+                        <select id="settingCensor">
+                            <option value="soft" selected>Приглушение (мягко)</option>
+                            <option value="mute">Полный мьют (тишина)</option>
+                            <option value="beep">Бип (как на ТВ)</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>Тип цензуры</label>
+                        <select id="settingType">
+                            <option value="full">Полная (всё слово)</option>
+                            <option value="partial" selected>Мягкая (начало слышно)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-checks">
+                    <label class="checkbox-wrap">
+                        <input type="checkbox" id="checkEnglish">
+                        <span class="checkmark"></span>
+                        Английский мат
+                    </label>
+                    <label class="checkbox-wrap">
+                        <input type="checkbox" id="checkRude">
+                        <span class="checkmark"></span>
+                        Грубости (жо*а, де*ьмо и т.д.)
+                    </label>
+                </div>
+
+                <div class="upload-summary" id="uploadSummary">
+                    <div class="summary-line">Стоимость: <b>8 ⚡</b></div>
+                    <div class="summary-line">Примерное время: <b>~5 мин</b></div>
+                    <div class="summary-line dim">Бонусом: субтитры .srt + таймкоды + полный текст</div>
+                </div>
+
+                <button class="btn-primary btn-process" onclick="startProcess()">
+                    ⚡ Обработать за 8 зарядов
+                </button>
+
+                <div class="upload-warning">
+                    ⚠️ Скачайте результат сразу — файл удалится через 24 часа
+                </div>
+            </div>
+
+            <!-- Прогресс -->
+            <div class="upload-progress" id="uploadProgress" style="display:none;">
+                <div class="progress-status" id="progressStatus">Загрузка видео...</div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-percent" id="progressPercent">0%</div>
+            </div>
+
+            <!-- Авторизация -->
+            <div class="auth-block" id="authBlock" style="display:none;">
+                <p>Для обработки видео войдите в аккаунт</p>
+                <button class="btn-google" onclick="loginGoogle()">
+                    <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    Войти через Google
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <h2>Частые вопросы</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Какие слова удаляет АНТИМАТ? <span>+</span></div>
+                <div class="faq-a">Все основные матерные слова русского языка — производные от корней на б, х, п, е и других. База содержит 200+ корней с учётом всех падежей, приставок, суффиксов и словоформ. Также можно включить удаление грубостей и английского мата. Умная система исключений не тронет нормальные слова вроде «команда», «мандарин» или «мудрость».</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Как именно заглушается мат? <span>+</span></div>
+                <div class="faq-a">На выбор три режима: <b>Приглушение</b> — звук плавно затихает, самый естественный вариант. <b>Полный мьют</b> — полная тишина на месте мата. <b>Бип</b> — классический звуковой сигнал как на ТВ. Также можно выбрать полную цензуру (всё слово заглушено) или мягкую (начало слова слышно для понимания контекста).</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Меняется ли качество видео? <span>+</span></div>
+                <div class="faq-a">Видеодорожка копируется без перекодирования — качество картинки 1 в 1 как в оригинале. Аудио перекодируется в AAC 192 kbps — разницу на слух не заметите. Разрешение, частота кадров и все параметры сохраняются.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Работает ли с фоновой музыкой? <span>+</span></div>
+                <div class="faq-a">Да! Нейросеть Whisper отлично распознаёт речь даже с фоновой музыкой, шумами и звуковыми эффектами. При очень громкой музыке (когда речь почти не слышна человеку) точность может немного снизиться.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Что такое заряды ⚡? <span>+</span></div>
+                <div class="faq-a">Заряды — внутренняя валюта АНТИМАТ. Вы покупаете пакет зарядов и тратите их на обработку видео. Чем больше пакет — тем выгоднее. Заряды не сгорают и хранятся на аккаунте бессрочно.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Чем отличаются тарифы Стандарт и Максимум? <span>+</span></div>
+                <div class="faq-a"><b>Стандарт</b> — модель medium, точность ~90%, быстрая обработка, подходит для большинства задач. <b>Максимум</b> — модель large-v3, точность ~98%, самое точное распознавание. Рекомендуем «Максимум» — лучшее соотношение цены и качества.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Какие форматы поддерживаются? <span>+</span></div>
+                <div class="faq-a">Видео: MP4, AVI, MKV, MOV, WEBM, FLV, WMV и другие. Аудио: MP3, WAV, AAC, FLAC, OGG. Максимальный размер — 10 ГБ. На выходе: MP4 (видео) или WAV (аудиодорожка).</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Безопасно ли загружать видео? <span>+</span></div>
+                <div class="faq-a">Да. Видео передаётся по зашифрованному HTTPS. После обработки файл хранится 24 часа для скачивания, затем автоматически удаляется. Мы не просматриваем и не храним ваши файлы.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Можно ли использовать для YouTube и ТВ? <span>+</span></div>
+                <div class="faq-a">Именно для этого АНТИМАТ и создан! Ютуберы, стримеры, подкастеры, ТВ-продакшены — все, кому нужно убрать мат быстро. Монетизация YouTube снижается за нецензурную лексику — АНТИМАТ решает эту проблему автоматически.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Что я получу кроме чистого видео? <span>+</span></div>
+                <div class="faq-a">К каждому заказу бесплатно: <b>субтитры .srt</b> (для YouTube, Premiere Pro, DaVinci), <b>таймкоды мата</b> (где именно был мат), <b>полный текст</b> видео. Если выбрали «только аудио» — получите чистую аудиодорожку для замены в монтаже.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Как происходит оплата? <span>+</span></div>
+                <div class="faq-a">Через безопасную систему ЮKassa. Принимаем банковские карты (Visa, Mastercard, МИР), СБП (оплата через банк), ЮMoney. Чек приходит на email автоматически. Заряды зачисляются мгновенно.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Точность 98% — а остальные 2%? <span>+</span></div>
+                <div class="faq-a">Нейросеть large-v3 находит 98% нецензурной лексики — это лучший результат среди всех существующих решений. Оставшиеся 1–2% — это редкие случаи: мат на фоне очень громкой музыки, невнятная речь, нестандартное произношение. Модель medium (~90%) тоже отлично работает и стоит дешевле. <b>Для YouTube:</b> обе модели значительно снижают риск ограничения 18+, но с large-v3 шансы на чистый статус видео максимальные. Мы честно предупреждаем: 100% гарантии не даёт ни одна система в мире, но 98% — это лучше, чем у любого монтажёра после 8 часов работы.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Есть ли возврат средств? <span>+</span></div>
+                <div class="faq-a">Если нейросеть обработала видео некорректно (не нашла мат, заглушила нормальные слова) — напишите в поддержку, мы вернём заряды на баланс.
+        </div>
+    </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-card">
+            <h2>Остались вопросы?</h2>
+            <p>Напишите нам — ответим в течение часа</p>
+            <div class="contact-links">
+                <a href="mailto:support@anti-mat.ru" class="contact-link">
+                    <span class="contact-icon">📧</span>
+                    support@anti-mat.ru
+                </a>
+                <a href="https://t.me/antimat_support" class="contact-link">
+                    <span class="contact-icon">💬</span>
+                    Telegram поддержка
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ФУТЕР -->
+<footer>
+    <div class="container footer-inner">
+        <div class="footer-left">
+            <a href="#" class="logo">
+                <svg class="logo-icon" width="24" height="24" viewBox="0 0 28 28" fill="none">
+                    <path d="M14 2L3 7V13C3 19.6 7.7 25.7 14 27C20.3 25.7 25 19.6 25 13V7L14 2Z" fill="url(#sg2)" opacity="0.15" stroke="url(#sg2)" stroke-width="1.5"/>
+                    <defs><linearGradient id="sg2" x1="3" y1="2" x2="25" y2="27"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+                </svg>
+                АНТИМАТ
+            </a>
+            <p>Автоматическое удаление мата из видео с помощью ИИ</p>
+        </div>
+        <div class="footer-links">
+            <a href="#how">Как работает</a>
+            <a href="#features">Возможности</a>
+            <a href="#pricing">Цены</a>
+            <a href="#faq">Вопросы</a>
+        </div>
+        <div class="footer-contacts">
+            <a href="mailto:support@anti-mat.ru">support@anti-mat.ru</a>
+            <a href="https://t.me/antimat_support">Telegram</a>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>© 2025 АНТИМАТ. Все права защищены.</p>
+        <p class="footer-legal">Работает на базе Whisper (OpenAI), FFmpeg. Оплата через ЮKassa.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
