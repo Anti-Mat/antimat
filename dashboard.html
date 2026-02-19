@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кабинет — АНТИМАТ</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         .dashboard{min-height:100vh;padding:20px;max-width:1200px;margin:0 auto}
         .dash-header{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid rgba(124,58,237,0.2);margin-bottom:30px}
@@ -92,7 +91,6 @@
             <button class="btn-logout" onclick="logout()">Выйти</button>
         </div>
     </div>
-
     <div class="balance-card">
         <div class="balance-info">
             <h2>Ваш баланс</h2>
@@ -100,7 +98,6 @@
         </div>
         <button class="btn-buy" onclick="window.location.href='/#pricing'">Купить заряды</button>
     </div>
-
     <div class="upload-section">
         <h3>🎬 Обработать видео</h3>
         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
@@ -114,7 +111,6 @@
             <span id="fileSize" style="color:#9ca3af;margin-left:10px"></span>
         </div>
         <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
-
         <div class="settings-grid">
             <div class="setting-group">
                 <label>🌍 Язык речи</label>
@@ -126,8 +122,8 @@
             <div class="setting-group">
                 <label>🤖 Модель распознавания</label>
                 <select id="modelSelect">
-                    <option value="large-v3">Large-v3 (точнее, 1 заряд/мин)</option>
-                    <option value="medium">Medium (быстрее, 1 заряд/мин)</option>
+                    <option value="large-v3">Large-v3 (точнее)</option>
+                    <option value="medium">Medium (быстрее)</option>
                 </select>
             </div>
             <div class="setting-group">
@@ -151,15 +147,12 @@
                 <textarea id="whitelistWords" placeholder="Слова которые НЕ нужно заглушать&#10;Например: блин, жесть"></textarea>
             </div>
         </div>
-
         <button class="btn-process" id="processBtn" onclick="startProcessing()" disabled>⚡ Обработать видео (1 заряд/мин)</button>
     </div>
-
     <div class="history-section">
         <h3>📋 История обработок</h3>
         <div id="historyList"><div class="history-empty">Пока нет обработанных видео</div></div>
     </div>
-
     <div class="referral-section">
         <h3>🎁 Реферальная программа</h3>
         <p class="referral-desc">Приглашайте друзей и получайте 20% от их покупок в виде зарядов!</p>
@@ -170,40 +163,43 @@
     </div>
 </div>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = 'https://xlifaeppnxpdisjgwaex.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_dw0s1Zka29BXoAx6MHlU1g_rAxAoae8';
+var SUPABASE_URL = 'https://xlifaeppnxpdisjgwaex.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_dw0s1Zka29BXoAx6MHlU1g_rAxAoae8';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-let currentUser = null;
-let isLoginMode = true;
-let selectedFile = null;
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+var currentUser = null;
+var isLoginMode = true;
+var selectedFile = null;
 
 async function checkAuth() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-        currentUser = session.user;
-        await ensureUserInDB();
-        showDashboard();
-    }
+    try {
+        var result = await sb.auth.getSession();
+        if (result.data.session) {
+            currentUser = result.data.session.user;
+            await ensureUserInDB();
+            showDashboard();
+        }
+    } catch(e) { console.log('Auth check error:', e); }
 }
 
 async function handleAuth() {
-    const email = document.getElementById('authEmail').value.trim();
-    const password = document.getElementById('authPassword').value;
-    const errorEl = document.getElementById('authError');
+    var email = document.getElementById('authEmail').value.trim();
+    var password = document.getElementById('authPassword').value;
+    var errorEl = document.getElementById('authError');
     errorEl.style.display = 'none';
     if (!email || !password) { showError('Заполните все поля'); return; }
     if (password.length < 6) { showError('Пароль минимум 6 символов'); return; }
     try {
-        let result;
+        var result;
         if (isLoginMode) {
-            result = await supabase.auth.signInWithPassword({ email, password });
+            result = await sb.auth.signInWithPassword({ email: email, password: password });
         } else {
-            result = await supabase.auth.signUp({ email, password });
+            result = await sb.auth.signUp({ email: email, password: password });
         }
         if (result.error) {
-            let msg = result.error.message;
+            var msg = result.error.message;
             if (msg === 'Invalid login credentials') msg = 'Неверный email или пароль';
             if (msg.includes('already registered')) msg = 'Этот email уже зарегистрирован';
             showError(msg);
@@ -217,11 +213,11 @@ async function handleAuth() {
         currentUser = result.data.user;
         await ensureUserInDB();
         showDashboard();
-    } catch (e) { showError('Ошибка соединения'); }
+    } catch(e) { showError('Ошибка соединения'); }
 }
 
 function showError(msg) {
-    const el = document.getElementById('authError');
+    var el = document.getElementById('authError');
     el.textContent = msg;
     el.style.display = 'block';
     el.style.color = '#f87171';
@@ -238,41 +234,47 @@ function toggleAuth() {
 }
 
 async function logout() {
-    await supabase.auth.signOut();
+    await sb.auth.signOut();
     currentUser = null;
     document.getElementById('dashboard').style.display = 'none';
     document.getElementById('authOverlay').style.display = 'flex';
 }
 
 async function ensureUserInDB() {
-    const { data } = await supabase.from('users').select('*').eq('email', currentUser.email).single();
-    if (!data) {
-        const refCode = 'REF' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        await supabase.from('users').insert({
-            id: currentUser.id,
-            email: currentUser.email,
-            name: currentUser.user_metadata?.full_name || '',
-            referral_code: refCode,
-            charges: 1
-        });
-    }
+    try {
+        var check = await sb.from('users').select('*').eq('email', currentUser.email).single();
+        if (!check.data) {
+            var refCode = 'REF' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            await sb.from('users').insert({
+                id: currentUser.id,
+                email: currentUser.email,
+                name: currentUser.user_metadata ? currentUser.user_metadata.full_name || '' : '',
+                referral_code: refCode,
+                charges: 1
+            });
+        }
+    } catch(e) { console.log('DB error:', e); }
 }
 
 async function getUserData() {
-    const { data } = await supabase.from('users').select('*').eq('email', currentUser.email).single();
-    return data;
+    try {
+        var result = await sb.from('users').select('*').eq('email', currentUser.email).single();
+        return result.data;
+    } catch(e) { return null; }
 }
 
 async function getHistory() {
-    const { data } = await supabase.from('jobs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
-    return data || [];
+    try {
+        var result = await sb.from('jobs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
+        return result.data || [];
+    } catch(e) { return []; }
 }
 
 async function showDashboard() {
     document.getElementById('authOverlay').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     document.getElementById('userEmail').textContent = currentUser.email;
-    const userData = await getUserData();
+    var userData = await getUserData();
     if (userData) {
         document.getElementById('userCharges').textContent = userData.charges || 0;
         document.getElementById('referralLink').value = 'https://anti-mat.ru?ref=' + (userData.referral_code || '');
@@ -281,22 +283,27 @@ async function showDashboard() {
 }
 
 async function loadHistory() {
-    const history = await getHistory();
-    const container = document.getElementById('historyList');
+    var history = await getHistory();
+    var container = document.getElementById('historyList');
     if (history.length === 0) {
         container.innerHTML = '<div class="history-empty">Пока нет обработанных видео</div>';
         return;
     }
-    container.innerHTML = history.map(job => {
-        let sc = 'status-processing', st = 'Обработка...';
+    var html = '';
+    for (var i = 0; i < history.length; i++) {
+        var job = history[i];
+        var sc = 'status-processing', st = 'Обработка...';
         if (job.status === 'done') { sc = 'status-done'; st = 'Готово'; }
         if (job.status === 'error') { sc = 'status-error'; st = 'Ошибка'; }
-        return '<div class="history-item"><span class="history-name">🎬 ' + job.file_name + '</span><span class="history-status ' + sc + '">' + st + '</span>' + (job.status === 'done' ? '<a href="' + job.result_url + '" class="btn-copy" download>⬇ Скачать</a>' : '') + '</div>';
-    }).join('');
+        html += '<div class="history-item"><span class="history-name">🎬 ' + job.file_name + '</span><span class="history-status ' + sc + '">' + st + '</span>';
+        if (job.status === 'done') html += '<a href="' + job.result_url + '" class="btn-copy" download>⬇ Скачать</a>';
+        html += '</div>';
+    }
+    container.innerHTML = html;
 }
 
 function handleFile(input) {
-    const file = input.files[0];
+    var file = input.files[0];
     if (!file) return;
     selectedFile = file;
     document.getElementById('fileInfo').style.display = 'block';
@@ -311,14 +318,15 @@ function formatSize(bytes) {
     return (bytes/(1024*1024*1024)).toFixed(2) + ' ГБ';
 }
 
-const uz = document.getElementById('uploadZone');
+var uz = document.getElementById('uploadZone');
 if (uz) {
-    uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('dragover'); });
-    uz.addEventListener('dragleave', () => uz.classList.remove('dragover'));
-    uz.addEventListener('drop', e => {
+    uz.addEventListener('dragover', function(e) { e.preventDefault(); uz.classList.add('dragover'); });
+    uz.addEventListener('dragleave', function() { uz.classList.remove('dragover'); });
+    uz.addEventListener('drop', function(e) {
         e.preventDefault(); uz.classList.remove('dragover');
-        if (e.dataTransfer.files[0]?.type.startsWith('video/')) {
-            document.getElementById('fileInput').files = e.dataTransfer.files;
+        var files = e.dataTransfer.files;
+        if (files[0] && files[0].type.indexOf('video') === 0) {
+            document.getElementById('fileInput').files = files;
             handleFile(document.getElementById('fileInput'));
         }
     });
@@ -326,39 +334,36 @@ if (uz) {
 
 async function startProcessing() {
     if (!selectedFile || !currentUser) return;
-    const userData = await getUserData();
+    var userData = await getUserData();
     if (!userData || userData.charges < 1) {
         alert('Недостаточно зарядов! Купите на главной странице.');
         return;
     }
-    const btn = document.getElementById('processBtn');
+    var btn = document.getElementById('processBtn');
     btn.disabled = true;
     btn.textContent = '⏳ Загрузка видео...';
     document.getElementById('progressBar').style.display = 'block';
     document.getElementById('progressFill').style.width = '30%';
-    setTimeout(() => {
+    setTimeout(function() {
         document.getElementById('progressFill').style.width = '60%';
         btn.textContent = '🤖 Обработка...';
     }, 2000);
-    setTimeout(() => {
-        document.getElementById('progressFill').style.width = '90%';
-    }, 4000);
-    setTimeout(() => {
+    setTimeout(function() {
         document.getElementById('progressFill').style.width = '100%';
         btn.textContent = '⚡ Обработать видео (1 заряд/мин)';
         btn.disabled = false;
         document.getElementById('progressBar').style.display = 'none';
-        alert('⚠️ Обработка видео будет доступна после подключения GPU сервера. Сейчас работает только интерфейс.');
-    }, 6000);
+        alert('Обработка видео будет доступна после подключения GPU сервера. Сейчас работает только интерфейс кабинета.');
+    }, 5000);
 }
 
 function copyReferral() {
-    const input = document.getElementById('referralLink');
+    var input = document.getElementById('referralLink');
     input.select();
     navigator.clipboard.writeText(input.value);
-    const btn = event.target;
+    var btn = document.querySelector('.btn-copy');
     btn.textContent = '✅ Скопировано!';
-    setTimeout(() => btn.textContent = '📋 Копировать', 2000);
+    setTimeout(function() { btn.textContent = '📋 Копировать'; }, 2000);
 }
 
 checkAuth();
