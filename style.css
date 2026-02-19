@@ -1547,4 +1547,31 @@ footer {
 
 .btn-price.best:hover {
     box-shadow: 0 6px 24px rgba(236, 72, 153, 0.3);
+
+}
+
+/* Фикс контактов */
+.contact-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    border-radius: 12px;
+    background: rgba(124, 58, 237, 0.06);
+    color: #a78bfa;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.5);
 }
