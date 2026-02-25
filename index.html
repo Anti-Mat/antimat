@@ -21,6 +21,7 @@
         <nav class="nav">
             <a href="#features">Возможности</a>
             <a href="#pricing">Цены</a>
+            <a href="#tech">Технологии</a>
             <a href="#faq">FAQ</a>
         </nav>
         <button class="btn btn-primary btn-login" onclick="openModal()">Войти</button>
@@ -30,13 +31,14 @@
 <!-- ГЛАВНЫЙ ЭКРАН -->
 <section class="hero">
     <div class="container hero-inner">
-        <div class="hero-badge">⚡ Лучшая модель обработки</div>
+        <div class="hero-badge">⚡ Лучшая модель обработки — Whisper large-v3-turbo</div>
         <h1 class="hero-title">
-            Убери <span class="gradient-text">мат</span> из видео<br>за минуту
+            Мат в видео?<br>
+            <span class="gradient-text">Уберём за минуту</span>
         </h1>
         <p class="hero-subtitle">
-            Загрузи видео — нейросеть найдёт и заглушит все нецензурные слова. 
-            Точность до 90%. Быстро, просто, надёжно.
+            Больше не нужно тратить часы на ручную цензуру — загрузи видео и АНТИМАТ
+            автоматически найдёт и заглушит весь мат. Быстро, точно, просто.
         </p>
         <div class="hero-buttons">
             <button class="btn btn-primary btn-lg" onclick="openModal()">
@@ -45,7 +47,7 @@
         </div>
         <div class="hero-stats">
             <div class="stat">
-                <span class="stat-number">90%</span>
+                <span class="stat-number">~90%</span>
                 <span class="stat-label">точность</span>
             </div>
             <div class="stat-divider"></div>
@@ -76,7 +78,6 @@
             <button class="btn btn-primary btn-lg" onclick="openModal()">
                 Войти / Зарегистрироваться
             </button>
-            <p class="cta-hint">🎁 5 бесплатных зарядов при регистрации</p>
         </div>
     </div>
 </section>
@@ -97,7 +98,7 @@
             <div class="feature-card">
                 <div class="feature-icon">🎯</div>
                 <h3>Лучшая модель</h3>
-                <p>Используем Whisper large-v3 — самую точную модель распознавания речи от OpenAI.</p>
+                <p>Используем Whisper large-v3-turbo — самую точную и быструю модель распознавания речи от OpenAI.</p>
             </div>
             
             <div class="feature-card">
@@ -199,6 +200,38 @@
     </div>
 </section>
 
+<!-- ТЕХНОЛОГИИ -->
+<section class="tech" id="tech">
+    <div class="container">
+        <h2 class="section-title">Технологии</h2>
+        <p class="section-subtitle">Мы используем лучшие инструменты для обработки вашего контента</p>
+        
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-logo">🤖</div>
+                <h3>OpenAI Whisper</h3>
+                <p>Модель large-v3-turbo для распознавания речи с высокой точностью на русском языке.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-logo">🎞️</div>
+                <h3>FFmpeg</h3>
+                <p>Профессиональный инструмент для обработки видео и аудио файлов любых форматов.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-logo">🧠</div>
+                <h3>NLP Анализ</h3>
+                <p>Собственный алгоритм контекстного анализа для точного определения нецензурной лексики.</p>
+            </div>
+        </div>
+        
+        <p class="tech-notice">
+            Данный сервис использует технологии машинного обучения от OpenAI (Whisper large-v3-turbo) 
+            для распознавания речи, а также FFmpeg для обработки медиафайлов. 
+            Обработка данных производится в соответствии с политикой конфиденциальности.
+        </p>
+    </div>
+</section>
+
 <!-- FAQ -->
 <section class="faq" id="faq">
     <div class="container">
@@ -211,7 +244,7 @@
                     <span class="faq-arrow">▾</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Вы загружаете видео или аудио, наша нейросеть (Whisper large-v3) распознаёт речь, находит нецензурные слова и заглушает их выбранным способом — бип, тишина или замена звуком. Вместе с обработанным файлом вы получаете текстовый файл с таймкодами найденных слов.</p>
+                    <p>Вы загружаете видео или аудио, нейросеть Whisper large-v3-turbo распознаёт речь, находит нецензурные слова и заглушает их выбранным способом — бип, тишина или замена звуком. Вместе с обработанным файлом вы получаете текстовый файл с таймкодами найденных слов.</p>
                 </div>
             </div>
             
@@ -221,7 +254,7 @@
                     <span class="faq-arrow">▾</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Мы используем лучшую модель — Whisper large-v3 от OpenAI. Точность распознавания мата составляет ~90%. Вы также можете добавить свои слова в словарь для повышения точности.</p>
+                    <p>Мы используем лучшую модель — Whisper large-v3-turbo от OpenAI. Точность распознавания мата составляет ~90%. Вы также можете добавить свои слова в словарь для повышения точности.</p>
                 </div>
             </div>
             
@@ -281,10 +314,13 @@
         <div class="footer-links">
             <a href="#features">Возможности</a>
             <a href="#pricing">Цены</a>
+            <a href="#tech">Технологии</a>
             <a href="#faq">FAQ</a>
         </div>
         <div class="footer-contact">
-            <a href="mailto:support@anti-mat.ru">support@anti-mat.ru</a>
+            <p class="footer-contact-title">Поддержка:</p>
+            <a href="https://t.me/antimat_support" class="footer-tg">✈️ @antimat_support</a>
+            <a href="mailto:supp0rt.antimat@yandex.ru" class="footer-email">📧 supp0rt.antimat@yandex.ru</a>
         </div>
     </div>
 </footer>
@@ -319,13 +355,9 @@
         <p class="modal-switch" id="switchText">
             Нет аккаунта? <a href="#" onclick="switchMode(event)">Зарегистрироваться</a>
         </p>
-        
-        <p class="modal-gift">🎁 5 бесплатных зарядов при регистрации!</p>
     </div>
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
-
-
