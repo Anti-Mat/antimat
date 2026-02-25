@@ -938,19 +938,29 @@ body {
     margin-bottom: 8px;
 }
 
-.footer-tg,
-.footer-email {
-    display: block;
-    color: var(--purple);
+.footer-link-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
     text-decoration: none;
     font-size: 14px;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+}
+
+.footer-link-item:hover {
+    color: var(--purple);
+}
+
+.footer-link-item svg {
+    flex-shrink: 0;
+    opacity: 0.6;
     transition: opacity 0.3s;
 }
 
-.footer-tg:hover,
-.footer-email:hover {
-    opacity: 0.8;
+.footer-link-item:hover svg {
+    opacity: 1;
 }
 
 /* ===== ТЕХНОЛОГИИ МОБИЛЬНАЯ ===== */
@@ -959,5 +969,6 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
 
 
